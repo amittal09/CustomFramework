@@ -14,7 +14,7 @@ namespace Framework
         {
             StartupModule = startupModule;
             var options = new FrameworkBootstrapperOptions();
-            optionsAction(options);
+            optionsAction?.Invoke(options);
         }
 
         public static FrameworkBootStrapper Create<TStartupModule>(Action<FrameworkBootstrapperOptions> optionsAction = null)
