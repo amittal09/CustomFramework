@@ -1,4 +1,5 @@
-﻿using Framework.Modules;
+﻿using Framework.Dependency;
+using Framework.Modules;
 using System;
 using System.Reflection;
 
@@ -7,7 +8,7 @@ namespace Framework
     public class FrameworkBootStrapper :IDisposable
     {
         public Type StartupModule { get; set; }
-
+        public IIocManager IocManager { get; set; }
         protected bool IsDisposed;
 
         private FrameworkBootStrapper(Type startupModule, Action<FrameworkBootstrapperOptions> optionsAction)
@@ -15,6 +16,7 @@ namespace Framework
             StartupModule = startupModule;
             var options = new FrameworkBootstrapperOptions();
             optionsAction?.Invoke(options);
+            IocManager = options.IocManager;
         }
 
         public static FrameworkBootStrapper Create<TStartupModule>(Action<FrameworkBootstrapperOptions> optionsAction = null)
